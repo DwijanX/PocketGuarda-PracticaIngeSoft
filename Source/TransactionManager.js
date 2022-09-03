@@ -1,12 +1,12 @@
 let TransactionsList=[]
-function getMonto()
+function getMonto(bloqueMonto)
 {
     let MontoValue=0;
     for(let i=0;i<TransactionsList.length;i++)
     {
         MontoValue+=TransactionsList[i]["monto"];
     }
-    return MontoValue;
+    bloqueMonto.innerHTML=MontoValue;
 }
 function addTransactionToTransactionList(Transaction)
 {
