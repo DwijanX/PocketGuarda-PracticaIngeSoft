@@ -10,6 +10,7 @@
   "author": "Christian Rivero Nicolas Cari",
   "license": "ISC",
   "dependencies": {
+    "csv-parse": "^5.3.0",
     "parsel": "^0.3.0"
   }
 }

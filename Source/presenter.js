@@ -6,6 +6,7 @@ const TransacionList =document.getElementById("TransacionList");
 function LoadFunction()
 {
     CampoMonto.innerHTML=getMonto()
+    
     LoadPhantom(TransacionList)
 }
 
