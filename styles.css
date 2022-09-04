@@ -2,3 +2,8 @@ img
 {
     width: 30px;
 }
+#monto-section
+{
+    border-bottom:2px solid black;
+    margin-bottom: 10px;
+}
