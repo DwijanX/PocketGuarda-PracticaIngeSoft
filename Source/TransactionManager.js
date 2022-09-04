@@ -13,16 +13,24 @@ function LoadPhantom(TransacionListBlock)
 {
     TransacionList.innerHTML='<img src="./Assets/Fantasmin.png" alt="Fantasma">'
 }
-function getHtmldtTransaction(monto,tipo)
+function getHtmldtTransaction(Transaction)
 {
-    return "<dt>"+monto+"</dt>"+"<dd>"+tipo+"</dd>";
+    let ans='<dt><span id="title">'+Transaction["titulo"]+'</span></dt>'
+    Object.keys(Transaction).forEach((TransactionField)=>
+    {
+        if (TransactionField!="titulo")
+        {
+            ans+="<dd>"+TransactionField+": "+Transaction[TransactionField]+"</dd>"
+        }
+    })
+    return ans;
 }
 function getTransactionListHTMLAnswer()
 {
     let InnerHtmlans="<dl>"
     for(let i=0;i<TransactionsList.length;i++)
     {
-        InnerHtmlans+=getHtmldtTransaction(TransactionsList[i]["monto"],TransactionsList[i]["tipo"])
+        InnerHtmlans+=getHtmldtTransaction(TransactionsList[i])
     }
     if (InnerHtmlans!="<dl>")
     {
@@ -57,9 +65,9 @@ function updateMonto(transaccion, bloqueMonto)
     }
     bloqueMonto.innerHTML = montoActual;
 }
-function addTransaction(monto, tipo, bloqueMonto,TransactionListBlock)
+function addTransaction(monto, tipo,titulo,categoria,fecha, bloqueMonto,TransactionListBlock)
 {
-    let dict = {'tipo':tipo,'monto':monto}   
+    let dict = {'tipo':tipo,'monto':monto,'titulo':titulo,'categoria':categoria,'fecha':fecha}   
     updateMonto(dict, bloqueMonto)
     TransactionsList.push(dict)
     loadTransactions(TransactionListBlock)
