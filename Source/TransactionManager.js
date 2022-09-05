@@ -3,39 +3,29 @@ let TransactionsList=[]
 function calculateMontoBasedOnTransactionsArray(TransactionArray)
 {
     let MontoValue=0;
+    let ingresoValue=0;
     for(let i=0;i<TransactionArray.length;i++)
     {
         if (TransactionArray[i]["tipo"]=="ingreso")
         {
             MontoValue+=TransactionsList[i]["monto"];
+            ingresoValue+=TransactionsList[i]["monto"];
         }
         else
         {
             MontoValue-=TransactionsList[i]["monto"];
         }
     }
-    return MontoValue;
+    return MontoValue, ingresoValue;
 }
-function getMonto(bloqueMonto)
+function getMonto(bloqueMonto, ingresoMonto)
 {
     let monto=calculateMontoBasedOnTransactionsArray(TransactionsList);
+    let ingreso = calculateMontoBasedOnTransactionsArray(TransactionsList);
     if (monto<0)
         bloqueMonto.style.color = "red";
     bloqueMonto.innerHTML=monto
-}
-
-function differentiateValues(bloqueMonto)
-{
-    let MontoValue=0;
-
-    for(let i=0;i<TransactionsList.length;i++)
-    {
-        if(TransactionsList[i]["tipo"] == ingreso)
-        {
-            MontoValue+=TransactionsList[i]["monto"];
-        }
-    }
-    bloqueMonto.innerHTML=MontoValue;
+    ingresoMonto.innerHTML=ingreso
 }
 
 function LoadPhantom(TransacionListBlock)
@@ -99,12 +89,14 @@ function loadTransactionsStats( lowLimDate,topLimDate,TransactionStatsBlock)
     TransactionStatsBlock.innerHTML="<p>Monto usado en el rango ingresado: "+MontoInDateRange+"</p>";
 }
 
-function updateMonto(transaccion, bloqueMonto, tipoTransaccion)
+function updateMonto(transaccion, bloqueMonto, ingresoMonto)
 {
     let montoActual = Number.parseFloat(bloqueMonto.innerHTML);
+    let ingreso= Number.parseFloat(ingresoMonto.innerHTML);
     if (transaccion["tipo"] == "ingreso")
     {
         montoActual += transaccion["monto"]
+        ingreso += transaccion["monto"]
     }
     else
     {
@@ -115,12 +107,12 @@ function updateMonto(transaccion, bloqueMonto, tipoTransaccion)
     else
     bloqueMonto.style.color ="var(--quaternary-color)"
     bloqueMonto.innerHTML = montoActual;
-    tipoTransaccion.innerHTML = Math.abs(montoActual);
+    ingresoMonto.innerHTML = ingreso;
 }
-function addTransaction(monto, tipo,titulo,categoria,fecha, bloqueMonto,TransactionListBlock)
+function addTransaction(monto, tipo,titulo,categoria,fecha, bloqueMonto,transactionMonto,TransactionListBlock)
 {
     let dict = {'tipo':tipo,'monto':monto,'titulo':titulo,'categoria':categoria,'fecha':fecha}   
-    updateMonto(dict, bloqueMonto)
+    updateMonto(dict, bloqueMonto, transactionMonto)
     TransactionsList.push(dict)
     loadTransactions(TransactionListBlock)
 }

@@ -8,6 +8,7 @@ const getStatsButton = document.querySelector("#getStatsButton");
 //outputs
 
 const CampoMonto = document.getElementById("mainMontoField");
+const ingresoMonto = document.getElementById("ingresoField");
 const TransactionList = document.getElementById("TransacionList");
 const StatsContainer = document.getElementById("StatsRetrievedContainer");
 
@@ -28,7 +29,7 @@ function addNewTransaction(type)
     let titulo = tituloTransaccion.value
     let categoria = categoriaInput.value
     let fecha = new Date(fechaInput.value)
-    addTransaction(dinero,type,titulo,categoria,fecha,CampoMonto,TransactionList)
+    addTransaction(dinero,type,titulo,categoria,fecha,CampoMonto,ingresoMonto,TransactionList)
 }
 getStatsButton.addEventListener("click", (event) => {
     event.preventDefault();
@@ -49,7 +50,7 @@ egreso.addEventListener("click", (event) => {
 
 function LoadFunction()
 {
-    getMonto(CampoMonto)
+    getMonto(CampoMonto, ingresoMonto)
     loadTransactions(TransactionList)
 }
 
