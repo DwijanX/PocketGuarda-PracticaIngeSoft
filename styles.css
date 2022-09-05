@@ -71,10 +71,15 @@ img
 }
 #monto-section
 {
+    display: flex;
     padding-left: 4%;
     background-color: var(--secondary-color);
     border-bottom:2px solid var(--secondary-color);
     margin-bottom: 10px;
+}
+#monto-section div
+{
+    margin-left: 1%;
 }
 #transaccionInputFields
 {
