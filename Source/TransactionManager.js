@@ -1,17 +1,28 @@
 let TransactionsList=[]
 
-function getMonto(bloqueMonto)
+function calculateMontoBasedOnTransactionsArray(TransactionArray)
 {
     let MontoValue=0;
-    for(let i=0;i<TransactionsList.length;i++)
+    for(let i=0;i<TransactionArray.length;i++)
     {
-        MontoValue+=TransactionsList[i]["monto"];
+        if (TransactionArray[i]["tipo"]=="ingreso")
+        {
+            MontoValue+=TransactionsList[i]["monto"];
+        }
+        else
+        {
+            MontoValue-=TransactionsList[i]["monto"];
+        }
     }
-    bloqueMonto.innerHTML=MontoValue;
+    return MontoValue;
+}
+function getMonto(bloqueMonto)
+{
+    bloqueMonto.innerHTML=calculateMontoBasedOnTransactionsArray(TransactionsList);
 }
 function LoadPhantom(TransacionListBlock)
 {
-    TransacionList.innerHTML='<img src="./Assets/Fantasmin.png" alt="Fantasma">'
+    TransacionListBlock.innerHTML='<img src="./Assets/Fantasmin.png" alt="Fantasma">'
 }
 function getHtmldtTransaction(Transaction)
 {
@@ -51,6 +62,24 @@ function loadTransactions(TransactionListBlock)
         LoadPhantom(TransactionListBlock);
     }
 }
+function getTransactionsMadeBetweenADate(lowLimDate,topLimDate,TransactionArray)
+{
+    let AnsArray=[]
+    TransactionArray.forEach((Transaction)=>
+    {
+        if(Transaction["fecha"].getTime()>=lowLimDate.getTime() && Transaction["fecha"].getTime()<=topLimDate.getTime())
+        {
+            AnsArray.push(Transaction)
+        }
+    })
+    return AnsArray
+}
+function loadTransactionsStats( lowLimDate,topLimDate,TransactionStatsBlock)
+{
+    let TransactionsArrayToDisplay=getTransactionsMadeBetweenADate(lowLimDate,topLimDate,TransactionsList);
+    let MontoInDateRange=calculateMontoBasedOnTransactionsArray(TransactionsArrayToDisplay)
+    TransactionStatsBlock.innerHTML="<p>Monto usado en el rango ingresado: "+MontoInDateRange+"</p>";
+}
 
 function updateMonto(transaccion, bloqueMonto)
 {
@@ -74,4 +103,4 @@ function addTransaction(monto, tipo,titulo,categoria,fecha, bloqueMonto,Transact
 }
 
 
-export {getMonto, addTransaction,loadTransactions}
+export {getMonto, addTransaction,loadTransactions,loadTransactionsStats}

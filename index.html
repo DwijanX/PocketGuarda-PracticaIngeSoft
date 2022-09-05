@@ -10,13 +10,11 @@
 <body>
     <div id="monto-section">
         <h3>Monto Actual</h3>
-        <p id="MontoField"></p>
+        <p id="mainMontoField"></p>
     </div>
 
     <section id="Transacciones-section">
-        <section id="TransacionList">
-
-        </section>
+        
         <section id="transaccionInputFields">
             <label for="tituloTransaccion">Titulo de la transaccion:</label>
             <input type="text" id="tituloTransaccion" />
@@ -32,11 +30,24 @@
             <button id="ingreso">ingreso</button>
             <button id="egreso">egreso</button>
         </section>
+        <section id="TransacionList">
+
+        </section>
     </section>
 
-
     <section id="Estadisticas-section">
+        <div id="DateSelector">
+            <label for="lowDateLimStats">fecha de inicio:</label>
+            <input type="date" id="lowDateLimStats" />
+            <label for="topDateLimStats">fecha de fin:</label>
+            <input type="date" id="topDateLimStats" />
+        </div>
+        <div id="ButtonsStats">
+            <button id="getStatsButton">Obtener estadisticas</button>
+        </div>
+        <div id="StatsRetrievedContainer">
 
+        </div>
     </section>
     <section id="Configuracion-section">
 
