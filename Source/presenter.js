@@ -1,9 +1,10 @@
-import {getMonto, addTransaction,loadTransactions,loadTransactionsStats} from "./TransactionManager.js"
+import {getMonto, addTransaction,loadTransactions,loadTransactionsStats, deleteTransaction} from "./TransactionManager.js"
 
 //Buttons
 const ingreso = document.querySelector("#ingreso");
 const egreso = document.querySelector("#egreso");
 const getStatsButton = document.querySelector("#getStatsButton");
+const borrar = document.querySelector("#borrarButton");
 
 //outputs
 
@@ -19,9 +20,12 @@ const montoTransaccion = document.querySelector("#montoTransaccion");
 const tituloTransaccion = document.querySelector("#tituloTransaccion");
 const categoriaInput = document.getElementById("categoriaInput");
 const fechaInput = document.getElementById("fechaInput");
+const idBorrar = document.getElementById("borrarTransaccion");
 const lowDateLimStats = document.getElementById("lowDateLimStats");
 const topDateLimStats = document.getElementById("topDateLimStats");
 
+//variable de id
+let id = 0;
 
 
 function addNewTransaction(type)
@@ -30,7 +34,8 @@ function addNewTransaction(type)
     let titulo = tituloTransaccion.value
     let categoria = categoriaInput.value
     let fecha = new Date(fechaInput.value)
-    addTransaction(dinero,type,titulo,categoria,fecha,CampoMonto,ingresoMonto,egresoMonto,TransactionList)
+    addTransaction(dinero,type,titulo,categoria,fecha,id,CampoMonto,ingresoMonto,egresoMonto,TransactionList)
+    id++
 }
 getStatsButton.addEventListener("click", (event) => {
     event.preventDefault();
@@ -48,6 +53,13 @@ egreso.addEventListener("click", (event) => {
     event.preventDefault();
     addNewTransaction("egreso")
 });
+
+borrar.addEventListener("click", (event) => {
+   event.preventDefault();
+
+   deleteTransaction(idBorrar, TransactionList)
+});
+
 
 function LoadFunction()
 {

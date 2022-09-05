@@ -36,6 +36,7 @@ function LoadPhantom(TransacionListBlock)
 {
     TransacionListBlock.innerHTML='<img src="./Assets/Fantasmin.png" alt="Fantasma">'
 }
+
 function getHtmldtTransaction(Transaction)
 {
     let ans='<dt><span id="title">'+Transaction["titulo"]+'</span></dt>'
@@ -43,14 +44,16 @@ function getHtmldtTransaction(Transaction)
     {
         if (TransactionField!="titulo")
         {
-            ans+="<dd>"+TransactionField+": "+Transaction[TransactionField]+"</dd>"
+            ans+="<dd>"+TransactionField+": "+Transaction[TransactionField]
         }
     })
+    ans+= '<dd id="button">'+'<center><button class="borrarT" id="1">borrar Transaccion</button></center>'+"</dd>"
     return ans;
 }
+
 function getTransactionListHTMLAnswer()
 {
-    let InnerHtmlans="<dl>"
+    let InnerHtmlans='<dl class="listTransaction">'
     for(let i=0;i<TransactionsList.length;i++)
     {
         InnerHtmlans+=getHtmldtTransaction(TransactionsList[i])
@@ -60,8 +63,10 @@ function getTransactionListHTMLAnswer()
         InnerHtmlans+="</dl>";
         return InnerHtmlans
     }
+
     return false
 }
+
 function loadTransactions(TransactionListBlock)
 {
     let HtmlAns=getTransactionListHTMLAnswer()
@@ -116,13 +121,32 @@ function updateMonto(transaccion, bloqueMonto, ingresoMonto, egresoMonto)
     ingresoMonto.innerHTML = ingreso;
     egresoMonto.innerHTML = egreso;
 }
-function addTransaction(monto, tipo,titulo,categoria,fecha, bloqueMonto,ingresoMonto, egresoMonto,TransactionListBlock)
+
+function addTransaction(monto, tipo,titulo,categoria,fecha,id,bloqueMonto,ingresoMonto, egresoMonto,TransactionListBlock)
 {
-    let dict = {'tipo':tipo,'monto':monto,'titulo':titulo,'categoria':categoria,'fecha':fecha}   
+    let dict = {'tipo':tipo,'monto':monto,'titulo':titulo,'categoria':categoria,'fecha':fecha, 'id':id}   
     updateMonto(dict, bloqueMonto, ingresoMonto, egresoMonto)
     TransactionsList.push(dict)
     loadTransactions(TransactionListBlock)
 }
 
+function getTransaction(id, TransactionArray)
+{
+    TransactionArray.forEach((Transaction)=>
+    {
+        if(Transaction["id"] == id)
+        {
+            return Transaction
+        }
+    })
+}
 
-export {getMonto, addTransaction,loadTransactions,loadTransactionsStats}
+function deleteTransaction(id, TransactionListBlock)
+{
+    let dict = getTransaction(id, TransactionsList)
+    TransactionsList.pop(dict)
+    loadTransactions(TransactionListBlock)
+}
+
+
+export {getMonto, addTransaction,loadTransactions,loadTransactionsStats, deleteTransaction}

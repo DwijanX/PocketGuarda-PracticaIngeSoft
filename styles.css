@@ -16,6 +16,7 @@ h3,p,label,input,h4,nav,button
 {
     color: var(--quaternary-color);
 }
+
 button
 {
     background-color: var(--secondary-color);
@@ -25,6 +26,20 @@ button
     margin-top: 1%;
     margin-bottom: 1%;
 }
+
+#borrarButton
+{
+    font-weight: bold;
+    background-color:#a01414 ;
+    text-align: center;
+    display:inline-block;
+}
+
+#borrarSection
+{
+    text-align: center;
+}
+
 #ButtonsTransaction,#ButtonsStats
 {
     display: flex;
