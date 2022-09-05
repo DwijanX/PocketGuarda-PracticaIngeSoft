@@ -1,14 +1,27 @@
 let TransactionsList=[]
 
-function getMonto(bloqueMonto)
+function calculateMontoBasedOnTransactionsArray(TransactionArray)
 {
     let MontoValue=0;
-
-    for(let i=0;i<TransactionsList.length;i++)
+    for(let i=0;i<TransactionArray.length;i++)
     {
-        MontoValue+=TransactionsList[i]["monto"];
+        if (TransactionArray[i]["tipo"]=="ingreso")
+        {
+            MontoValue+=TransactionsList[i]["monto"];
+        }
+        else
+        {
+            MontoValue-=TransactionsList[i]["monto"];
+        }
     }
-    bloqueMonto.innerHTML=MontoValue;
+    return MontoValue;
+}
+function getMonto(bloqueMonto)
+{
+    let monto=calculateMontoBasedOnTransactionsArray(TransactionsList);
+    if (monto<0)
+        bloqueMonto.style.color = "red";
+    bloqueMonto.innerHTML=monto
 }
 
 function differentiateValues(bloqueMonto)
@@ -27,18 +40,26 @@ function differentiateValues(bloqueMonto)
 
 function LoadPhantom(TransacionListBlock)
 {
-    TransacionList.innerHTML='<img src="./Assets/Fantasmin.png" alt="Fantasma">'
+    TransacionListBlock.innerHTML='<img src="./Assets/Fantasmin.png" alt="Fantasma">'
 }
-function getHtmldtTransaction(monto,tipo)
+function getHtmldtTransaction(Transaction)
 {
-    return "<dt>"+monto+"</dt>"+"<dd>"+tipo+"</dd>";
+    let ans='<dt><span id="title">'+Transaction["titulo"]+'</span></dt>'
+    Object.keys(Transaction).forEach((TransactionField)=>
+    {
+        if (TransactionField!="titulo")
+        {
+            ans+="<dd>"+TransactionField+": "+Transaction[TransactionField]+"</dd>"
+        }
+    })
+    return ans;
 }
 function getTransactionListHTMLAnswer()
 {
     let InnerHtmlans="<dl>"
     for(let i=0;i<TransactionsList.length;i++)
     {
-        InnerHtmlans+=getHtmldtTransaction(TransactionsList[i]["monto"],TransactionsList[i]["tipo"])
+        InnerHtmlans+=getHtmldtTransaction(TransactionsList[i])
     }
     if (InnerHtmlans!="<dl>")
     {
@@ -59,6 +80,24 @@ function loadTransactions(TransactionListBlock)
         LoadPhantom(TransactionListBlock);
     }
 }
+function getTransactionsMadeBetweenADate(lowLimDate,topLimDate,TransactionArray)
+{
+    let AnsArray=[]
+    TransactionArray.forEach((Transaction)=>
+    {
+        if(Transaction["fecha"].getTime()>=lowLimDate.getTime() && Transaction["fecha"].getTime()<=topLimDate.getTime())
+        {
+            AnsArray.push(Transaction)
+        }
+    })
+    return AnsArray
+}
+function loadTransactionsStats( lowLimDate,topLimDate,TransactionStatsBlock)
+{
+    let TransactionsArrayToDisplay=getTransactionsMadeBetweenADate(lowLimDate,topLimDate,TransactionsList);
+    let MontoInDateRange=calculateMontoBasedOnTransactionsArray(TransactionsArrayToDisplay)
+    TransactionStatsBlock.innerHTML="<p>Monto usado en el rango ingresado: "+MontoInDateRange+"</p>";
+}
 
 function updateMonto(transaccion, bloqueMonto, tipoTransaccion)
 {
@@ -71,33 +110,20 @@ function updateMonto(transaccion, bloqueMonto, tipoTransaccion)
     {
         montoActual -= transaccion["monto"]
     }
+    if (montoActual<0)
+        bloqueMonto.style.color = "red";
+    else
+    bloqueMonto.style.color ="var(--quaternary-color)"
     bloqueMonto.innerHTML = montoActual;
     tipoTransaccion.innerHTML = Math.abs(montoActual);
 }
-
-function updateTransaction(transaccion, bloqueMonto)
+function addTransaction(monto, tipo,titulo,categoria,fecha, bloqueMonto,TransactionListBlock)
 {
-    let montoActual = Number.parseFloat(bloqueMonto.innerHTML);
-    if (transaccion["tipo"] == "ingreso")
-    {
-        montoActual += transaccion["monto"]
-    }
-    else
-    {
-        montoActual -= transaccion["monto"]
-    }
-    bloqueMonto.innerHTML = montoActual;
-    
-}
-
-function addTransaction(monto, tipo, bloqueMonto,TransactionListBlock, transactionMonto)
-{
-
-    let dict = {'tipo':tipo,'monto':monto}   
-    updateMonto(dict, bloqueMonto, transactionMonto)
+    let dict = {'tipo':tipo,'monto':monto,'titulo':titulo,'categoria':categoria,'fecha':fecha}   
+    updateMonto(dict, bloqueMonto)
     TransactionsList.push(dict)
     loadTransactions(TransactionListBlock)
 }
 
 
-export {getMonto, addTransaction,loadTransactions, differentiateValues}
+export {getMonto, addTransaction,loadTransactions,loadTransactionsStats}

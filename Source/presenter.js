@@ -1,35 +1,56 @@
-import {getMonto, addTransaction,loadTransactions, differentiateValues} from "./TransactionManager.js"
+import {getMonto, addTransaction,loadTransactions,loadTransactionsStats} from "./TransactionManager.js"
 
+//Buttons
 const ingreso = document.querySelector("#ingreso");
 const egreso = document.querySelector("#egreso");
+const getStatsButton = document.querySelector("#getStatsButton");
 
-const transaccion = document.querySelector("#transaccion");
-const CampoMonto = document.getElementById("MontoField");
-const ingresoMonto = document.getElementById("ingresoField");
-const TransacionList = document.getElementById("TransacionList");
+//outputs
+
+const CampoMonto = document.getElementById("mainMontoField");
+const TransactionList = document.getElementById("TransacionList");
+const StatsContainer = document.getElementById("StatsRetrievedContainer");
+
+//inputs
+
+const montoTransaccion = document.querySelector("#montoTransaccion");
+const tituloTransaccion = document.querySelector("#tituloTransaccion");
+const categoriaInput = document.getElementById("categoriaInput");
+const fechaInput = document.getElementById("fechaInput");
+const lowDateLimStats = document.getElementById("lowDateLimStats");
+const topDateLimStats = document.getElementById("topDateLimStats");
+
+
+
+function addNewTransaction(type)
+{
+    let dinero = Number.parseInt(montoTransaccion.value)
+    let titulo = tituloTransaccion.value
+    let categoria = categoriaInput.value
+    let fecha = new Date(fechaInput.value)
+    addTransaction(dinero,type,titulo,categoria,fecha,CampoMonto,TransactionList)
+}
+getStatsButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    let lowLimDate=new Date(lowDateLimStats.value)
+    let topLimDate=new Date(topDateLimStats.value)
+    loadTransactionsStats(lowLimDate,topLimDate,StatsContainer)
+});
 
 ingreso.addEventListener("click", (event) => {
     event.preventDefault();
-
-    let dinero = Number.parseInt(transaccion.value)
-    addTransaction(dinero,"ingreso",CampoMonto,TransacionList,ingresoMonto)
-
+    addNewTransaction("ingreso")
 });
 
 egreso.addEventListener("click", (event) => {
     event.preventDefault();
-
-    let dinero = Number.parseFloat(transaccion.value)
-    addTransaction(dinero,"egreso",CampoMonto,TransacionList,ingresoMonto)
-
-
+    addNewTransaction("egreso")
 });
 
 function LoadFunction()
 {
     getMonto(CampoMonto)
-    differentiateValues(ingresoMonto)
-    loadTransactions(TransacionList)
+    loadTransactions(TransactionList)
 }
 
 document.onload=LoadFunction()
