@@ -3,12 +3,28 @@ let TransactionsList=[]
 function getMonto(bloqueMonto)
 {
     let MontoValue=0;
+
     for(let i=0;i<TransactionsList.length;i++)
     {
         MontoValue+=TransactionsList[i]["monto"];
     }
     bloqueMonto.innerHTML=MontoValue;
 }
+
+function differentiateValues(bloqueMonto)
+{
+    let MontoValue=0;
+
+    for(let i=0;i<TransactionsList.length;i++)
+    {
+        if(TransactionsList[i]["tipo"] == ingreso)
+        {
+            MontoValue+=TransactionsList[i]["monto"];
+        }
+    }
+    bloqueMonto.innerHTML=MontoValue;
+}
+
 function LoadPhantom(TransacionListBlock)
 {
     TransacionList.innerHTML='<img src="./Assets/Fantasmin.png" alt="Fantasma">'
@@ -44,7 +60,7 @@ function loadTransactions(TransactionListBlock)
     }
 }
 
-function updateMonto(transaccion, bloqueMonto)
+function updateMonto(transaccion, bloqueMonto, tipoTransaccion)
 {
     let montoActual = Number.parseFloat(bloqueMonto.innerHTML);
     if (transaccion["tipo"] == "ingreso")
@@ -56,14 +72,32 @@ function updateMonto(transaccion, bloqueMonto)
         montoActual -= transaccion["monto"]
     }
     bloqueMonto.innerHTML = montoActual;
+    tipoTransaccion.innerHTML = Math.abs(montoActual);
 }
-function addTransaction(monto, tipo, bloqueMonto,TransactionListBlock)
+
+function updateTransaction(transaccion, bloqueMonto)
 {
+    let montoActual = Number.parseFloat(bloqueMonto.innerHTML);
+    if (transaccion["tipo"] == "ingreso")
+    {
+        montoActual += transaccion["monto"]
+    }
+    else
+    {
+        montoActual -= transaccion["monto"]
+    }
+    bloqueMonto.innerHTML = montoActual;
+    
+}
+
+function addTransaction(monto, tipo, bloqueMonto,TransactionListBlock, transactionMonto)
+{
+
     let dict = {'tipo':tipo,'monto':monto}   
-    updateMonto(dict, bloqueMonto)
+    updateMonto(dict, bloqueMonto, transactionMonto)
     TransactionsList.push(dict)
     loadTransactions(TransactionListBlock)
 }
 
 
-export {getMonto, addTransaction,loadTransactions}
+export {getMonto, addTransaction,loadTransactions, differentiateValues}
