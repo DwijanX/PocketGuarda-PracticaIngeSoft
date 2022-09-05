@@ -18,7 +18,10 @@ function calculateMontoBasedOnTransactionsArray(TransactionArray)
 }
 function getMonto(bloqueMonto)
 {
-    bloqueMonto.innerHTML=calculateMontoBasedOnTransactionsArray(TransactionsList);
+    let monto=calculateMontoBasedOnTransactionsArray(TransactionsList);
+    if (monto<0)
+        bloqueMonto.style.color = "red";
+    bloqueMonto.innerHTML=monto
 }
 function LoadPhantom(TransacionListBlock)
 {
@@ -92,6 +95,10 @@ function updateMonto(transaccion, bloqueMonto)
     {
         montoActual -= transaccion["monto"]
     }
+    if (montoActual<0)
+        bloqueMonto.style.color = "red";
+    else
+    bloqueMonto.style.color ="var(--quaternary-color)"
     bloqueMonto.innerHTML = montoActual;
 }
 function addTransaction(monto, tipo,titulo,categoria,fecha, bloqueMonto,TransactionListBlock)

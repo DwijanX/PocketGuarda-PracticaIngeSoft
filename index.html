@@ -8,50 +8,54 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="monto-section">
+    <header id="monto-section">
         <h3>Monto Actual</h3>
         <p id="mainMontoField"></p>
-    </div>
-
-    <section id="Transacciones-section">
-        
-        <section id="transaccionInputFields">
-            <label for="tituloTransaccion">Titulo de la transaccion:</label>
-            <input type="text" id="tituloTransaccion" />
-            <label for="montoTransaccion">cantidad de dinero:</label>
-            <input type="number" id="montoTransaccion" />
-            <label for="categoriaInput">Categoria:</label>
-            <input type="text" id="categoriaInput" />
-            <label for="fechaInput">fecha:</label>
-            <input type="date" id="fechaInput" />
+    </header>
+    <main>
+        <section id="Transacciones-section">
+            <h3>Agregar Transacciones</h3>
+            <section id="transaccionInputFields">
+                <label for="tituloTransaccion">Titulo de la transaccion:</label>
+                <input type="text" id="tituloTransaccion" />
+                <label for="montoTransaccion">Cantidad de dinero:</label>
+                <input type="number" id="montoTransaccion" />
+                <label for="categoriaInput">Categoria:</label>
+                <input type="text" id="categoriaInput" />
+                <label for="fechaInput">Fecha:</label>
+                <input type="date" id="fechaInput" />
+            </section>
+            
+            <section id="ButtonsTransaction">
+                <button id="ingreso">Ingreso</button>
+                <button id="egreso">Egreso</button>
+            </section>
+            <nav>
+                <h3>Lista de Transacciones</h3>
+                <section id="TransacionList">
+                </section>
+            </nav>
         </section>
-        
-        <section id="ButtonsTransaction">
-            <button id="ingreso">ingreso</button>
-            <button id="egreso">egreso</button>
+
+        <section id="Estadisticas-section">
+            <h3>Estadisticas</h3>
+            <div id="DateSelector">
+                <label for="lowDateLimStats">fecha de inicio:</label>
+                <input type="date" id="lowDateLimStats" />
+                <label for="topDateLimStats">fecha de fin:</label>
+                <input type="date" id="topDateLimStats" />
+            </div>
+            <div id="ButtonsStats">
+                <button id="getStatsButton">Obtener estadisticas</button>
+            </div>
+            <div id="StatsRetrievedContainer">
+
+            </div>
         </section>
-        <section id="TransacionList">
-
+        <section id="Configuracion-section">
+            <h3>Configuraciones</h3>
         </section>
-    </section>
-
-    <section id="Estadisticas-section">
-        <div id="DateSelector">
-            <label for="lowDateLimStats">fecha de inicio:</label>
-            <input type="date" id="lowDateLimStats" />
-            <label for="topDateLimStats">fecha de fin:</label>
-            <input type="date" id="topDateLimStats" />
-        </div>
-        <div id="ButtonsStats">
-            <button id="getStatsButton">Obtener estadisticas</button>
-        </div>
-        <div id="StatsRetrievedContainer">
-
-        </div>
-    </section>
-    <section id="Configuracion-section">
-
-    </section>
+    </main>
     <script type="module" src="./Source/presenter.js"></script>
 </body>
 </html>
