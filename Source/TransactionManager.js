@@ -1,3 +1,5 @@
+import PhantomImg from "../Assets/Fantasmin.png";
+
 let TransactionsList=[]
 
 function calculateTotalAmountIncomeOutcomeBasedOnTransactionsArray(TransactionArray)
@@ -36,7 +38,7 @@ function getMonto(bloqueMonto, ingresoMonto, egresoMonto)
 
 function LoadPhantom(TransacionListBlock)
 {
-    TransacionListBlock.innerHTML='<img src="./Assets/Fantasmin.png" alt="Fantasma">'
+    TransacionListBlock.innerHTML='<img src='+PhantomImg+' alt="Fantasma">'
 }
 
 function getHtmldtTransaction(Transaction)
@@ -59,7 +61,7 @@ function getTransactionListHTMLAnswer()
     {
         InnerHtmlans+=getHtmldtTransaction(TransactionsList[i])
     }
-    if (InnerHtmlans!="<dl>")
+    if (InnerHtmlans!='<dl class="listTransaction">')
     {
         InnerHtmlans+="</dl>";
         return InnerHtmlans
@@ -71,6 +73,7 @@ function getTransactionListHTMLAnswer()
 function loadTransactions(TransactionListBlock)
 {
     let HtmlAns=getTransactionListHTMLAnswer()
+    console.log(HtmlAns);
     if(HtmlAns)
     {
         TransactionListBlock.innerHTML=HtmlAns

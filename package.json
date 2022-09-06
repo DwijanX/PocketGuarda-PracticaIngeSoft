@@ -5,12 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "parcel index.html",
+    "build": "parcel build index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Christian Rivero Nicolas Cari",
   "license": "ISC",
   "dependencies": {
-    "csv-parse": "^5.3.0",
-    "parsel": "^0.3.0"
+    "parcel": "^2.7.0"
   }
 }
