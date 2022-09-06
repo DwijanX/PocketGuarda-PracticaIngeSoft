@@ -5,6 +5,7 @@ const ingreso = document.querySelector("#ingreso");
 const egreso = document.querySelector("#egreso");
 const getStatsButton = document.querySelector("#getStatsButton");
 const borrar = document.querySelector("#borrarButton");
+const darkMode = document.querySelector("#darkMode");
 
 //outputs
 
@@ -66,5 +67,16 @@ function LoadFunction()
     getMonto(CampoMonto, ingresoMonto, egresoMonto)
     loadTransactions(TransactionList)
 }
+
+function changeTheme() {
+    var element = document.body;
+    element.classList.toggle("dark-mode");
+}
+
+darkMode.addEventListener("click", (event) => {
+    event.preventDefault();
+ 
+    changeTheme()
+ });
 
 document.onload=LoadFunction()
