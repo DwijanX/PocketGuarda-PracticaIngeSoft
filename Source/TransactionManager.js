@@ -73,7 +73,6 @@ function getTransactionListHTMLAnswer()
 function loadTransactions(TransactionListBlock)
 {
     let HtmlAns=getTransactionListHTMLAnswer()
-    console.log(HtmlAns);
     if(HtmlAns)
     {
         TransactionListBlock.innerHTML=HtmlAns
@@ -166,10 +165,13 @@ function deleteTransactionFromArray(dic, TransactionArray)
 }
 
 
-function deleteTransaction(id, TransactionListBlock)
+function deleteTransaction(id, TransactionListBlock, bloqueMonto, ingresoMonto, egresoMonto)
 {
     let dict = getTransaction(id, TransactionsList)
     deleteTransactionFromArray(dict, TransactionsList)
+    let change = -dict["monto"]
+    dict["monto"] = change
+    updateMonto(dict, bloqueMonto, ingresoMonto, egresoMonto)
     loadTransactions(TransactionListBlock)
 }
 
