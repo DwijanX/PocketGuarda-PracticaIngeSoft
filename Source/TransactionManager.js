@@ -44,10 +44,9 @@ function getHtmldtTransaction(Transaction)
     {
         if (TransactionField!="titulo")
         {
-            ans+="<dd>"+TransactionField+": "+Transaction[TransactionField]
+            ans+="<dd>"+TransactionField+": "+Transaction[TransactionField]+"</dd>"
         }
     })
-    ans+= '<dd id="button">'+'<center><button class="borrarT" id="1">borrar Transaccion</button></center>'+"</dd>"
     return ans;
 }
 
@@ -132,19 +131,33 @@ function addTransaction(monto, tipo,titulo,categoria,fecha,id,bloqueMonto,ingres
 
 function getTransaction(id, TransactionArray)
 {
+    let answer;
     TransactionArray.forEach((Transaction)=>
     {
         if(Transaction["id"] == id)
         {
-            return Transaction
+            answer = Transaction
         }
     })
+    return answer;
 }
+
+function deleteTransactionFromArray(dic, TransactionArray)
+{
+    for(let i=0; i<TransactionArray.length; i++)
+    {
+        if(TransactionArray[i]["id"] == dic["id"])
+        {
+            TransactionArray.splice(i,1);
+        }
+    }
+}
+
 
 function deleteTransaction(id, TransactionListBlock)
 {
     let dict = getTransaction(id, TransactionsList)
-    TransactionsList.pop(dict)
+    deleteTransactionFromArray(dict, TransactionsList)
     loadTransactions(TransactionListBlock)
 }
 

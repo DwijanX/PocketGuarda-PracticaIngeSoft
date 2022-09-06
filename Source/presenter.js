@@ -57,7 +57,7 @@ egreso.addEventListener("click", (event) => {
 borrar.addEventListener("click", (event) => {
    event.preventDefault();
 
-   deleteTransaction(idBorrar, TransactionList)
+   deleteTransaction(idBorrar.value, TransactionList)
 });
 
 
