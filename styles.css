@@ -1,10 +1,18 @@
 :root {
-    --primary-color: #145DA0;
-    --secondary-color: #0C2D48;
+    --primary-color: #2c73b5;
+    --secondary-color: #0f4775;
     --tertiary-color: #2E8BC0;
     --quaternary-color: #B1D4E0;
 
   }
+
+.dark-mode {
+    --primary-color: #181219;
+    --secondary-color: #6a197e;
+    --tertiary-color: #11405b;
+    --quaternary-color: #fafafa;
+  }
+
 body
 {
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -34,6 +42,17 @@ button
     text-align: center;
     display:inline-block;
 }
+
+#darkMode
+{
+    width: 75%;
+    height: 75%;
+    font-weight: bold;
+    background-color:#a01414 ;
+    text-align: center;
+    display:inline-block;
+}
+
 
 #borrarSection
 {
