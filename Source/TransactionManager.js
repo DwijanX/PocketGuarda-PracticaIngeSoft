@@ -1,10 +1,11 @@
 let TransactionsList=[]
 
-function calculateMontoBasedOnTransactionsArray(TransactionArray)
+function calculateTotalAmountIncomeOutcomeBasedOnTransactionsArray(TransactionArray)
 {
     let MontoValue=0;
     let ingresoValue=0;
     let egresoValue=0;
+    
     for(let i=0;i<TransactionArray.length;i++)
     {
         if (TransactionArray[i]["tipo"]=="ingreso")
@@ -22,9 +23,10 @@ function calculateMontoBasedOnTransactionsArray(TransactionArray)
 }
 function getMonto(bloqueMonto, ingresoMonto, egresoMonto)
 {
-    let monto =calculateMontoBasedOnTransactionsArray(TransactionsList)[0];
-    let ingreso = calculateMontoBasedOnTransactionsArray(TransactionsList)[1];
-    let egreso = calculateMontoBasedOnTransactionsArray(TransactionsList)[2];
+    let AmountArray=calculateTotalAmountIncomeOutcomeBasedOnTransactionsArray(TransactionsList)
+    let monto =AmountArray[0];
+    let ingreso = AmountArray[1];
+    let egreso = AmountArray[2];
     if (monto<0)
         bloqueMonto.style.color = "red";
     bloqueMonto.innerHTML=monto
@@ -90,11 +92,18 @@ function getTransactionsMadeBetweenADate(lowLimDate,topLimDate,TransactionArray)
     })
     return AnsArray
 }
+function getStatsHTMLSummary(TotalAmount,Income,Outcome)
+{
+    let ans="<p>Monto: "+TotalAmount+"</p>";
+    ans+="<p>Ingreso: "+Income+"</p>";
+    ans+="<p>Egreso: "+Outcome+"</p>";
+    return ans;
+}
 function loadTransactionsStats( lowLimDate,topLimDate,TransactionStatsBlock)
 {
     let TransactionsArrayToDisplay=getTransactionsMadeBetweenADate(lowLimDate,topLimDate,TransactionsList);
-    let MontoInDateRange=calculateMontoBasedOnTransactionsArray(TransactionsArrayToDisplay)
-    TransactionStatsBlock.innerHTML="<p>Monto usado en el rango ingresado: "+MontoInDateRange+"</p>";
+    let AmountArray=calculateTotalAmountIncomeOutcomeBasedOnTransactionsArray(TransactionsArrayToDisplay);
+    TransactionStatsBlock.innerHTML=getStatsHTMLSummary(AmountArray[0],AmountArray[1],AmountArray[2]);
 }
 
 function updateMonto(transaccion, bloqueMonto, ingresoMonto, egresoMonto)
@@ -115,7 +124,7 @@ function updateMonto(transaccion, bloqueMonto, ingresoMonto, egresoMonto)
     if (montoActual<0)
         bloqueMonto.style.color = "red";
     else
-    bloqueMonto.style.color ="var(--quaternary-color)"
+        bloqueMonto.style.color ="var(--quaternary-color)"
     bloqueMonto.innerHTML = montoActual;
     ingresoMonto.innerHTML = ingreso;
     egresoMonto.innerHTML = egreso;
